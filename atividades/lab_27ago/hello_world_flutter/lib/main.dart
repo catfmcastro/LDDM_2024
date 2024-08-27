@@ -1,9 +1,8 @@
 /*
-  Ex 02 - LDDM
-    1) sem usar widgets OK
-    2) usando widgets OK
+  Pratica 01 - Interface
 
-  @owner: @catfmcastro
+  @owner: @catfmcastro - Catarina F. M. Castro
+  LDDM 2024_2
 */
 
 import 'package:flutter/material.dart';
@@ -47,7 +46,22 @@ class MyApp extends StatelessWidget {
                     decoration: InputDecoration(labelText: "Senha"),
                     style: TextStyle(color: Colors.purple, fontSize: 20),
                   ),
-                  
+                  const SizedBox(height: 20,),
+                  Container (
+                    child: ElevatedButton(
+                      onPressed: () => {}, 
+                      child: Text("Entrar")),
+                  ),
+                  const SizedBox(height: 20,),
+                  Row (                    
+                    children: <Widget>[
+                      Expanded(
+                        child: ElevatedButton(onPressed: () => {}, child: Text("Entrar")),
+                      ),
+                      Expanded (child: ElevatedButton(onPressed: () => {}, child: Text("Entrar")),
+                        )
+                    ]
+                  )
                 ],
               )
 
