@@ -50,15 +50,16 @@ class MyApp extends StatelessWidget {
                   Container (
                     child: ElevatedButton(
                       onPressed: () => {}, 
-                      child: Text("Entrar")),
+                      child: Text("Entrar", style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),)
                   ),
                   const SizedBox(height: 20,),
                   Row (                    
                     children: <Widget>[
                       Expanded(
-                        child: ElevatedButton(onPressed: () => {}, child: Text("Entrar")),
+                        child: Text("Novo aqui?"),
                       ),
-                      Expanded (child: ElevatedButton(onPressed: () => {}, child: Text("Entrar")),
+                      Expanded (child: TextButton(onPressed: () => {}, child: Text("Criar conta", style: TextStyle(color: Colors.blue))),
                         )
                     ]
                   )
