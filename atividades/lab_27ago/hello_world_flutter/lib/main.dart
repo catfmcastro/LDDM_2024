@@ -15,9 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Ex02',
+        title: 'Prática 01 - Interface',
         home: Scaffold(
-          appBar: AppBar(backgroundColor: Colors.blue,),
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            title: const Text("Login", style: TextStyle(color: Colors.white)),
+            iconTheme: IconThemeData(color: Colors.white),),
           drawer: Drawer(),
           bottomNavigationBar:
               BottomNavigationBar(
