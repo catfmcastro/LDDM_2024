@@ -30,84 +30,79 @@ class MyApp extends StatelessWidget {
                   icon: Icon(Icons.person), label: "Minha Conta")
             ]),
             body: Center(
-              child: Container(
-                  width: 400,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const TextField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(labelText: "Nome"),
-                        style: TextStyle(color: Colors.purple, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const TextField(
-                        keyboardType: TextInputType.datetime,
-                        decoration:
-                            InputDecoration(labelText: "Data de Nascimento"),
-                        style: TextStyle(color: Colors.purple, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const TextField(
-                        keyboardType: TextInputType.phone,
-                        maxLength: 11,
-                        decoration: InputDecoration(labelText: "Telefone"),
-                        style: TextStyle(color: Colors.purple, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(labelText: "E-mail"),
-                        style: TextStyle(color: Colors.purple, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const TextField(
-                        maxLength: 20,
-                        obscureText: true,
-                        decoration: InputDecoration(labelText: "Senha"),
-                        style: TextStyle(color: Colors.purple, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                          child: ElevatedButton(
-                        onPressed: () => {},
-                        child: Text("Entrar",
-                            style: TextStyle(color: Colors.white)),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue),
-                      )),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(children: <Widget>[
-                        Expanded(
-                          child: Text("Novo aqui?"),
+              child: SingleChildScrollView(
+                  child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const TextField(
+                          maxLength: 50,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(labelText: "Nome"),
+                          style: TextStyle(color: Colors.purple, fontSize: 20),
                         ),
-                        Expanded(
-                          child: TextButton(
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const TextField(
+                          keyboardType: TextInputType.datetime,
+                          decoration:
+                              InputDecoration(labelText: "Data de Nascimento"),
+                          style: TextStyle(color: Colors.purple, fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const TextField(
+                          keyboardType: TextInputType.phone,
+                          maxLength: 11,
+                          decoration: InputDecoration(labelText: "Telefone"),
+                          style: TextStyle(color: Colors.purple, fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const TextField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(labelText: "E-mail"),
+                          style: TextStyle(color: Colors.purple, fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const TextField(
+                          maxLength: 20,
+                          obscureText: true,
+                          decoration: InputDecoration(labelText: "Senha"),
+                          style: TextStyle(color: Colors.purple, fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                            width: 400,
+                            height: 50,
+                            child: ElevatedButton(
                               onPressed: () => {},
-                              child: Text("Criar conta",
-                                  style: TextStyle(color: Colors.blue))),
-                        )
-                      ])
-                    ],
-                  )
+                              child: Text("Cadastrar",
+                                  style: TextStyle(color: Colors.white)),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                              ),
+                            )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    )
 
-                  // child: TextField(
-                  //   decoration: InputDecoration(labelText: "Email: "),
-                  //   style: TextStyle(color: Colors.purple, fontSize: 20),
-                  ),
+                    // child: TextField(
+                    //   decoration: InputDecoration(labelText: "Email: "),
+                    //   style: TextStyle(color: Colors.purple, fontSize: 20),
+                    ),
+              )),
             )));
   }
 }
