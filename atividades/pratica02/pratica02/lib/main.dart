@@ -98,6 +98,13 @@ class MyApp extends StatelessWidget {
                       height: 20,
                     ),
 
+                    // SELEÇÃO DE NOTIFICAÇÃO com switches
+                    NotifSelection(),
+
+                    const SizedBox(
+                      height: 20,
+                    ),
+
                     Container(
                         width: 400,
                         height: 50,
@@ -143,7 +150,7 @@ class _GenderSelectionState extends State<GenderSelection> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Selecione o Gênero:', style: TextStyle(fontSize: 18)),
+        Text('Gênero:', style: TextStyle(fontSize: 14)),
         SizedBox(height: 10),
         Row(
           children: [
@@ -177,5 +184,43 @@ class _GenderSelectionState extends State<GenderSelection> {
         ),
       ],
     );
+  }
+}
+
+class NotifSelection extends StatefulWidget {
+  @override
+  _NotifSelectionState createState() => _NotifSelectionState();
+}
+
+class _NotifSelectionState extends State<NotifSelection> {
+  bool _email = false;
+  bool _push = false;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+          children: <Widget>[
+            Text('Notificações:', style: TextStyle(fontSize: 14)),
+            SwitchListTile(
+                activeColor: Colors.blue,
+                title: Text("Email: "),
+                value: _email,
+                onChanged: (bool valor) {
+                  setState(() {
+                    _email = valor;
+                  });
+                }),
+            SwitchListTile(
+                activeColor: Colors.blue,
+                title: Text("Push: "),
+                value: _push,
+                onChanged: (bool valor) {
+                  setState(() {
+                    _push = valor;
+                  });
+                }),
+          ],
+        ),
+      );
   }
 }
