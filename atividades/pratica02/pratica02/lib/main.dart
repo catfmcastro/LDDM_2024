@@ -80,12 +80,8 @@ class MyApp extends StatelessWidget {
                       height: 20,
                     ),
 
-                    const TextField(
-                      maxLength: 20,
-                      obscureText: true,
-                      decoration: InputDecoration(labelText: "Senha"),
-                      style: TextStyle(color: Colors.purple, fontSize: 20),
-                    ),
+                    // CAMPO DE SENHA
+                    PasswordField(),
 
                     const SizedBox(
                       height: 20,
@@ -128,6 +124,50 @@ class MyApp extends StatelessWidget {
                     ),
               )),
             )));
+  }
+}
+
+class PasswordField extends StatefulWidget {
+  @override
+  _PasswordFieldState createState() => _PasswordFieldState();
+}
+
+class _PasswordFieldState extends State<PasswordField> {
+  // Initially password is obscure
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          TextFormField(
+            obscureText: _obscureText,
+            style: TextStyle(color: Colors.purple, fontSize: 20),
+            decoration: InputDecoration(
+              labelText: "Senha",
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed:
+                    _toggle, // Adiciona a função _toggle ao pressionar o ícone
+              ),
+            ),
+            // FlatButton(
+            //     onPressed: _toggle,
+            //     child: new Text(_obscureText ? "Show" : "Hide"))
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -198,29 +238,29 @@ class _NotifSelectionState extends State<NotifSelection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-          children: <Widget>[
-            Text('Notificações:', style: TextStyle(fontSize: 14)),
-            SwitchListTile(
-                activeColor: Colors.blue,
-                title: Text("Email: "),
-                value: _email,
-                onChanged: (bool valor) {
-                  setState(() {
-                    _email = valor;
-                  });
-                }),
-            SwitchListTile(
-                activeColor: Colors.blue,
-                title: Text("Push: "),
-                value: _push,
-                onChanged: (bool valor) {
-                  setState(() {
-                    _push = valor;
-                  });
-                }),
-          ],
-        ),
-      );
+      child: Column(
+        children: <Widget>[
+          Text('Notificações:', style: TextStyle(fontSize: 14)),
+          SwitchListTile(
+              activeColor: Colors.blue,
+              title: Text("Email: "),
+              value: _email,
+              onChanged: (bool valor) {
+                setState(() {
+                  _email = valor;
+                });
+              }),
+          SwitchListTile(
+              activeColor: Colors.blue,
+              title: Text("Push: "),
+              value: _push,
+              onChanged: (bool valor) {
+                setState(() {
+                  _push = valor;
+                });
+              }),
+        ],
+      ),
+    );
   }
 }
