@@ -43,46 +43,60 @@ class MyApp extends StatelessWidget {
                       decoration: InputDecoration(labelText: "Nome"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
+
                     const TextField(
                       keyboardType: TextInputType.datetime,
                       decoration:
                           InputDecoration(labelText: "Data de Nascimento"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
+
                     const TextField(
                       keyboardType: TextInputType.phone,
                       maxLength: 11,
                       decoration: InputDecoration(labelText: "Telefone"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
+
                     const TextField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(labelText: "E-mail"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
+
                     const TextField(
                       maxLength: 20,
                       obscureText: true,
                       decoration: InputDecoration(labelText: "Senha"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
 
+                    // SELEÇÃO DE GÊNERO com radio
                     GenderSelection(),
+
+                    const SizedBox(
+                      height: 20,
+                    ),
 
                     Container(
                         width: 400,
@@ -116,19 +130,11 @@ class GenderSelection extends StatefulWidget {
 }
 
 class _GenderSelectionState extends State<GenderSelection> {
-  bool _feminino = false;
-  bool _masculino = false;
-  bool _outro = false;
+  String? _selected;
 
-  void _updateSelection(String gender) {
+  void _handleGenderChange(String? value) {
     setState(() {
-      if (gender == 'masculino') {
-        _masculino = true;
-      } else if (gender == 'feminino') {
-        _feminino = true;
-      } else if (gender == 'outro') {
-        _outro = true;
-      }
+      _selected = value;
     });
   }
 
@@ -141,33 +147,30 @@ class _GenderSelectionState extends State<GenderSelection> {
         SizedBox(height: 10),
         Row(
           children: [
-            Checkbox(
-              value: _masculino,
-              onChanged: (value) {
-                _updateSelection('masculino');
-              },
+            Radio<String>(
+              groupValue: _selected,
+              value: 'masculino',
+              onChanged: _handleGenderChange,
             ),
             Text('Masculino', style: TextStyle(fontSize: 16)),
           ],
         ),
         Row(
           children: [
-            Checkbox(
-              value: _feminino,
-              onChanged: (value) {
-                _updateSelection('feminino');
-              },
+            Radio<String>(
+              groupValue: _selected,
+              value: 'feminino',
+              onChanged: _handleGenderChange,
             ),
             Text('Feminino', style: TextStyle(fontSize: 16)),
           ],
         ),
         Row(
           children: [
-            Checkbox(
-              value: _outro,
-              onChanged: (value) {
-                _updateSelection('outro');
-              },
+            Radio<String>(
+              groupValue: _selected,
+              value: "outro",
+              onChanged: _handleGenderChange,
             ),
             Text('Outro', style: TextStyle(fontSize: 16)),
           ],
