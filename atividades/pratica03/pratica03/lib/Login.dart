@@ -1,11 +1,7 @@
-/*
-  Pratica 01 - Interface
-
-  @owner: @catfmcastro - Catarina F. M. Castro
-  LDDM 2024_2
-*/
+// Login page
 
 import 'package:flutter/material.dart';
+import 'package:pratica03/signin.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -58,7 +54,13 @@ class Login extends StatelessWidget {
                       Expanded(
                         child: Text("Novo aqui?"),
                       ),
-                      Expanded (child: TextButton(onPressed: () => {}, child: Text("Criar conta", style: TextStyle(color: Colors.blue))),
+                      Expanded (child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => SignIn())
+                          );
+                        }, 
+                        child: Text("Criar conta", style: TextStyle(color: Colors.blue))),
                         )
                     ]
                   )

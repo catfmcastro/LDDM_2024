@@ -1,9 +1,4 @@
-/*
-  Pratica 02 - Tela de cadastro com tamanho superior à tela
-
-  @owner: @catfmcastro - Catarina F. M. Castro
-  LDDM 2024_2
-*/
+// Sign-In page
 
 import 'package:flutter/material.dart';
 
@@ -15,10 +10,14 @@ class SignIn extends StatelessWidget {
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.blue,
-              title: const Text("Login", style: TextStyle(color: Colors.white)),
+              title: const Text("Cadastro", style: TextStyle(color: Colors.white)),
               iconTheme: IconThemeData(color: Colors.white),
+              leading: BackButton(
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.pop(context);
+                },)
             ),
-            drawer: Drawer(),
             bottomNavigationBar:
                 BottomNavigationBar(items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
