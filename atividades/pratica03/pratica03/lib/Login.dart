@@ -7,25 +7,13 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Prática 01 - Interface',
+        title: 'Login',
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue,
             title: const Text("Login", style: TextStyle(color: Colors.white)),
             iconTheme: IconThemeData(color: Colors.white),),
           drawer: Drawer(),
-          bottomNavigationBar:
-              BottomNavigationBar(
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home), 
-                    label: "Home"
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: "Minha Conta")
-                ]
-              ),
           body: Center(
             child: Container(
               width: 200,

@@ -6,7 +6,7 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Prática 02 - Cadastro',
+        title: 'Cadastro',
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.blue,
@@ -18,12 +18,6 @@ class SignIn extends StatelessWidget {
                   Navigator.pop(context);
                 },)
             ),
-            bottomNavigationBar:
-                BottomNavigationBar(items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: "Minha Conta")
-            ]),
             body: Center(
               child: SingleChildScrollView(
                   child: Padding(
