@@ -28,6 +28,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
+        index: _currentIndex,
         children: [Login(), Home(), About()],
       ),
       bottomNavigationBar: BottomNavigationBar(
