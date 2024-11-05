@@ -1,8 +1,23 @@
 // Sign-In page
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  TextEditingController _textController = TextEditingController();
+
+  _saveData() async{
+    String dados = _textController.text;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('nome', dados);
+    print("Operação salvar: $dados");
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +43,7 @@ class SignIn extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const TextField(
+                      controller: _textController,
                       maxLength: 50,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(labelText: "Nome"),
@@ -95,7 +111,7 @@ class SignIn extends StatelessWidget {
                         width: 400,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () => {},
+                          onPressed: -_saveData(),
                           child: Text("Cadastrar",
                               style: TextStyle(color: Colors.white)),
                           style: ElevatedButton.styleFrom(
