@@ -4,18 +4,35 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
+  const SignIn({super.key});
+
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  _saveData() async{
-    String dados = _textController.text;
+  _saveData() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('nome', dados);
-    print("Operação salvar: $dados");
+
+    if (_emailController.text.isNotEmpty) {
+      String email = _emailController.text;
+      List<String>? users = prefs.getStringList('users');
+      if (users != null) {
+        users.add(email);
+        await prefs.setStringList('users', users);
+      }
+
+      print("Operação salvar: $email");
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
   }
 
   @override
@@ -42,8 +59,7 @@ class _SignInState extends State<SignIn> {
                     child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TextField(
-                      controller: _textController,
+                    TextField(
                       maxLength: 50,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(labelText: "Nome"),
@@ -54,7 +70,7 @@ class _SignInState extends State<SignIn> {
                       height: 20,
                     ),
 
-                    const TextField(
+                    TextField(
                       keyboardType: TextInputType.datetime,
                       decoration:
                           InputDecoration(labelText: "Data de Nascimento"),
@@ -65,7 +81,7 @@ class _SignInState extends State<SignIn> {
                       height: 20,
                     ),
 
-                    const TextField(
+                    TextField(
                       keyboardType: TextInputType.phone,
                       maxLength: 11,
                       decoration: InputDecoration(labelText: "Telefone"),
@@ -76,7 +92,8 @@ class _SignInState extends State<SignIn> {
                       height: 20,
                     ),
 
-                    const TextField(
+                    TextField(
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(labelText: "E-mail"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
@@ -111,7 +128,7 @@ class _SignInState extends State<SignIn> {
                         width: 400,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: -_saveData(),
+                          onPressed: _saveData,
                           child: Text("Cadastrar",
                               style: TextStyle(color: Colors.white)),
                           style: ElevatedButton.styleFrom(
