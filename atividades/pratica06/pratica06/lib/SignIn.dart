@@ -18,16 +18,16 @@ class _SignInState extends State<SignIn> {
 
     if (_emailController.text.isNotEmpty) {
       String email = _emailController.text;
-      List<String>? users = prefs.getStringList('users');
-      if (users != null) {
-        users.add(email);
-        await prefs.setStringList('users', users);
-      }
-
+      List<String>? user = [email];
+      prefs.setStringList("users", user);
+      
       print("Operação salvar: $email");
       Navigator.pop(context);
+      }
+
     }
-  }
+  
+  
 
   @override
   void dispose() {
