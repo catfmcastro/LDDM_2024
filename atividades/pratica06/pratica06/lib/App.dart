@@ -13,7 +13,7 @@ class _AppState extends State<App> {
   int _currentIndex = 0;
   List<String>? _currentUser;
 
-  void getUserData() async {
+  void _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _currentUser = prefs.getStringList("users");
   }
@@ -29,6 +29,8 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     _isLogged();
+    _getUserData();
+    print("$_currentUser");
 
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +39,7 @@ class _AppState extends State<App> {
       ),
       body: IndexedStack(
         index: _currentIndex,
-        children: [Home()], // !!! ADD PERFIL E LISTA
+        children: [Home(user: _currentUser)], // !!! ADD PERFIL E LISTA
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

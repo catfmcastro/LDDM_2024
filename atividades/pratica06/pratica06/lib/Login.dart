@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:pratica06/signin.dart';
-import 'package:pratica06/Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {

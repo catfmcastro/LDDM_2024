@@ -14,10 +14,6 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _birthController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _notifController = TextEditingController();
 
   _saveData() async {
     final prefs = await SharedPreferences.getInstance();
