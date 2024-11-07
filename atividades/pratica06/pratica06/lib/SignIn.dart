@@ -12,26 +12,34 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _birthController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _notifController = TextEditingController();
 
   _saveData() async {
     final prefs = await SharedPreferences.getInstance();
 
     if (_emailController.text.isNotEmpty) {
       String email = _emailController.text;
-      List<String>? user = [email];
-      prefs.setStringList("users", user);
-      
-      print("Operação salvar: $email");
-      Navigator.pop(context);
-      }
+      String password = _passwordController.text;
+      String name = _nameController.text;
 
+      List<String>? user = [email, password, name];
+      prefs.setStringList("users", user);
+
+      print("Operação salvar: $email, $password, $name");
+      Navigator.pop(context);
     }
-  
-  
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -60,31 +68,10 @@ class _SignInState extends State<SignIn> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
+                      controller: _nameController,
                       maxLength: 50,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(labelText: "Nome"),
-                      style: TextStyle(color: Colors.purple, fontSize: 20),
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    TextField(
-                      keyboardType: TextInputType.datetime,
-                      decoration:
-                          InputDecoration(labelText: "Data de Nascimento"),
-                      style: TextStyle(color: Colors.purple, fontSize: 20),
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    TextField(
-                      keyboardType: TextInputType.phone,
-                      maxLength: 11,
-                      decoration: InputDecoration(labelText: "Telefone"),
                       style: TextStyle(color: Colors.purple, fontSize: 20),
                     ),
 
@@ -104,21 +91,7 @@ class _SignInState extends State<SignIn> {
                     ),
 
                     // CAMPO DE SENHA
-                    PasswordField(),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    // SELEÇÃO DE GÊNERO com radio
-                    GenderSelection(),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    // SELEÇÃO DE NOTIFICAÇÃO com switches
-                    NotifSelection(),
+                    PasswordField(passwordController: _passwordController),
 
                     const SizedBox(
                       height: 20,
@@ -151,6 +124,9 @@ class _SignInState extends State<SignIn> {
 }
 
 class PasswordField extends StatefulWidget {
+  final TextEditingController passwordController;
+  const PasswordField({super.key, required this.passwordController});
+
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
 }
@@ -172,6 +148,7 @@ class _PasswordFieldState extends State<PasswordField> {
       child: Column(
         children: <Widget>[
           TextFormField(
+            controller: widget.passwordController,
             obscureText: _obscureText,
             style: TextStyle(color: Colors.purple, fontSize: 20),
             decoration: InputDecoration(
@@ -188,100 +165,6 @@ class _PasswordFieldState extends State<PasswordField> {
             //     onPressed: _toggle,
             //     child: new Text(_obscureText ? "Show" : "Hide"))
           )
-        ],
-      ),
-    );
-  }
-}
-
-class GenderSelection extends StatefulWidget {
-  @override
-  _GenderSelectionState createState() => _GenderSelectionState();
-}
-
-class _GenderSelectionState extends State<GenderSelection> {
-  String? _selected;
-
-  void _handleGenderChange(String? value) {
-    setState(() {
-      _selected = value;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Gênero:', style: TextStyle(fontSize: 14)),
-        SizedBox(height: 10),
-        Row(
-          children: [
-            Radio<String>(
-              groupValue: _selected,
-              value: 'masculino',
-              onChanged: _handleGenderChange,
-            ),
-            Text('Masculino', style: TextStyle(fontSize: 16)),
-          ],
-        ),
-        Row(
-          children: [
-            Radio<String>(
-              groupValue: _selected,
-              value: 'feminino',
-              onChanged: _handleGenderChange,
-            ),
-            Text('Feminino', style: TextStyle(fontSize: 16)),
-          ],
-        ),
-        Row(
-          children: [
-            Radio<String>(
-              groupValue: _selected,
-              value: "outro",
-              onChanged: _handleGenderChange,
-            ),
-            Text('Outro', style: TextStyle(fontSize: 16)),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class NotifSelection extends StatefulWidget {
-  @override
-  _NotifSelectionState createState() => _NotifSelectionState();
-}
-
-class _NotifSelectionState extends State<NotifSelection> {
-  bool _email = false;
-  bool _push = false;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text('Notificações:', style: TextStyle(fontSize: 14)),
-          SwitchListTile(
-              activeColor: Colors.blue,
-              title: Text("Email: "),
-              value: _email,
-              onChanged: (bool valor) {
-                setState(() {
-                  _email = valor;
-                });
-              }),
-          SwitchListTile(
-              activeColor: Colors.blue,
-              title: Text("Push: "),
-              value: _push,
-              onChanged: (bool valor) {
-                setState(() {
-                  _push = valor;
-                });
-              }),
         ],
       ),
     );

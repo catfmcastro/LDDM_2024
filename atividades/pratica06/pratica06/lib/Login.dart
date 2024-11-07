@@ -14,12 +14,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   void _isLogged() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final email = prefs.getString('email');
-    if (email != null) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+    bool? isLogged = prefs.getBool('isLogged');
+
+    if (isLogged == true) {
+      Navigator.pushReplacementNamed(context, '/home');
     }
   }
 
@@ -28,9 +30,11 @@ class _LoginState extends State<Login> {
     List<String>? users = prefs.getStringList('users');
 
     if (users != null) {
-      if (users.contains(_emailController.text)) {
+      if (users.contains(_emailController.text) && users.contains(_passwordController.text)) {
         prefs.setString('email', _emailController.text);
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+        prefs.setString('password', _passwordController.text);
+        prefs.setBool('isLogged', true);
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         _createDialog();
       }
@@ -59,6 +63,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    _isLogged();
+
     return MaterialApp(
         title: 'Login',
         home: Scaffold(
@@ -83,6 +89,7 @@ class _LoginState extends State<Login> {
                         height: 20,
                       ),
                       TextField(
+                        controller: _passwordController,
                         decoration: InputDecoration(labelText: "Senha"),
                         style: TextStyle(color: Colors.purple, fontSize: 20),
                       ),

@@ -7,9 +7,15 @@
 
 import 'package:flutter/material.dart';
 import 'Login.dart';
+import 'App.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Login(),
+    title: "Prática 06 - Shared Preferences",
+    routes: 
+    {
+      '/': (context) => Login(),
+      '/home': (context) => App(),
+    },
   ));
 }
