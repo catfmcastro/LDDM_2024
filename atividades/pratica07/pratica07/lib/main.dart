@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
         // SQL para criar a tabela 'usuarios' com colunas de ID, nome e idade
         String sql = "CREATE TABLE usuarios ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "nome VARCHAR, idade INTEGER)";
+            "nome VARCHAR, idade INTEGER, matricula VARCHAR, curso VARCHAR)";
         db.execute(sql);
       },
     );
@@ -51,14 +51,18 @@ class _HomeState extends State<Home> {
   }
 
   // Método para inserir um novo usuário no banco de dados
-  _salvarDados(BuildContext context, String nome, int idade) async {
+  _salvarDados(BuildContext context, String nome, int idade, String matricula, String curso) async {
     Database db = await _recuperarBD();
 
     // Dados a serem inseridos, representados como um mapa
     Map<String, dynamic> dadosUsuario = {
       "nome": nome,
       "idade": idade,
+      "matricula": matricula,
+      "curso" : curso
     };
+
+  print("usuario: $dadosUsuario");
 
     // Insere os dados na tabela 'usuarios' e retorna o ID do novo registro
     int id = await db.insert("usuarios", dadosUsuario);
@@ -174,6 +178,8 @@ class _HomeState extends State<Home> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _idadeController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
+  final TextEditingController _matriculaController = TextEditingController();
+  final TextEditingController _cursoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -208,11 +214,36 @@ class _HomeState extends State<Home> {
                 keyboardType: TextInputType.number,
               ),
             ),
+            const Padding(padding: EdgeInsets.all(10)),
+            Container(
+              margin: const EdgeInsets.all(0.5),
+              width: 300,
+              alignment: Alignment.center,
+              child: TextField(
+                controller: _matriculaController,
+                decoration: const InputDecoration(
+                  label: Text("Digite a matrícula:"),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(10)),
+            Container(
+              margin: const EdgeInsets.all(0.5),
+              width: 300,
+              alignment: Alignment.center,
+              child: TextField(
+                controller: _cursoController,
+                decoration: const InputDecoration(
+                  label: Text("Digite o curso:"),
+                ),
+              ),
+            ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 _salvarDados(context, _nomeController.text,
-                    int.tryParse(_idadeController.text) ?? 0);
+                    int.tryParse(_idadeController.text) ?? 0, _matriculaController.text, _cursoController.text);
               },
               child: const Text("Salvar um usuário"),
             ),
