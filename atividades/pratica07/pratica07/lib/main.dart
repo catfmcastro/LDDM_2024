@@ -113,15 +113,15 @@ class _HomeState extends State<Home> {
   }
 
   // Método para listar um usuário específico com base no ID
-  _listarUmUsuario(BuildContext context, int id) async {
+  _listarUmUsuario(BuildContext context, String matricula) async {
     Database db = await _recuperarBD();
 
     // Faz a consulta na tabela 'usuarios' com o ID fornecido
     List usuarios = await db.query(
       "usuarios",
       columns: ["id", "nome", "idade", "matricula", "curso"],
-      where: "id = ?",
-      whereArgs: [id],
+      where: "matricula = ?",
+      whereArgs: [matricula],
     );
 
     // Verifica se o usuário existe e exibe um diálogo com as informações
@@ -130,30 +130,30 @@ class _HomeState extends State<Home> {
       _mostrarDialogo(context,
           "ID: ${usuario['id']} \nNome: ${usuario['nome']} \nIdade: ${usuario['idade']} \nMatricula: ${usuario['matricula']} \nCurso: ${usuario['curso']}");
     } else {
-      _mostrarDialogo(context, "Usuário com ID $id não encontrado.");
+      _mostrarDialogo(context, "Usuário com Matrícula $matricula não encontrado.");
     }
   }
 
   // Método para excluir um usuário com base no ID
-  _excluirUsuario(BuildContext context, int id) async {
+  _excluirUsuario(BuildContext context, String matricula) async {
     Database db = await _recuperarBD();
 
     // Exclui o registro de acordo com o ID fornecido
     int retorno = await db.delete(
       "usuarios",
-      where: "id = ?",
-      whereArgs: [id],
+      where: "matricula = ?",
+      whereArgs: [matricula],
     );
 
     print("Itens excluídos: $retorno");
 
     // Exibe um diálogo para confirmar a exclusão
-    _mostrarDialogo(context, "Usuário com ID $id excluído com sucesso.");
+    _mostrarDialogo(context, "Usuário com Matrícula $matricula excluído com sucesso.");
   }
 
   // Método para atualizar informações de um usuário existente
   _atualizarUsuario(
-      BuildContext context, int id, String? nome, int? idade, String? matricula, String? curso) async {
+      BuildContext context, String? nome, int? idade, String? matricula, String? curso) async {
     Database db = await _recuperarBD();
 
     // Cria um mapa para atualizar os dados somente dos campos não nulos
@@ -176,12 +176,12 @@ class _HomeState extends State<Home> {
       int retorno = await db.update(
         "usuarios",
         dadosUsuario,
-        where: "id = ?",
-        whereArgs: [id],
+        where: "matricula = ?",
+        whereArgs: [matricula],
       );
 
       print("Itens atualizados: $retorno");
-      _mostrarDialogo(context, "Usuário com ID $id atualizado com sucesso.");
+      _mostrarDialogo(context, "Usuário com Matricula $matricula atualizado com sucesso.");
     } else {
       _mostrarDialogo(context, "Nenhuma informação para atualizar.");
     }
@@ -281,12 +281,12 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                int? id = int.tryParse(_idController.text);
-                if (id != null) {
-                  _listarUmUsuario(context, id);
+                String? matricula = _matriculaController.text;
+                if (matricula != null) {
+                  _listarUmUsuario(context, matricula);
                 } else {
                   _mostrarDialogo(
-                      context, "Por favor, insira um ID válido para listar.");
+                      context, "Por favor, insira uma matrícula válida para listar.");
                 }
               },
               child: const Text("Listar um usuário"),
@@ -294,12 +294,12 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                int? id = int.tryParse(_idController.text);
-                if (id != null) {
-                  _excluirUsuario(context, id);
+                String? matricula = _matriculaController.text;
+                if (matricula != null) {
+                  _excluirUsuario(context, matricula);
                 } else {
                   _mostrarDialogo(
-                      context, "Por favor, insira um ID válido para excluir.");
+                      context, "Por favor, insira uma matrícula válida para excluir.");
                 }
               },
               child: const Text("Excluir usuário"),
@@ -307,13 +307,13 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                int? id = int.tryParse(_idController.text);
-                if (id != null) {
+                String? matricula = _matriculaController.text;
+                if (matricula != null) {
                   String? nome = _nomeController.text.isNotEmpty
                       ? _nomeController.text
                       : null;
                   int? idade = int.tryParse(_idadeController.text);
-                  _atualizarUsuario(context, id, nome, idade, _matriculaController.text, _cursoController.text);
+                  _atualizarUsuario(context, nome, idade, _matriculaController.text, _cursoController.text);
                 } else {
                   _mostrarDialogo(context,
                       "Por favor, insira um ID válido para atualizar.");
