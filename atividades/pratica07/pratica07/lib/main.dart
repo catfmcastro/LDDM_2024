@@ -35,7 +35,13 @@ class _HomeState extends State<Home> {
     // Abre o banco de dados e cria a tabela 'usuarios' se ainda não existir
     var retorno = await openDatabase(
       local,
-      version: 1,
+      version: 2, // Incrementa a versão do banco de dados
+      onUpgrade: (db, oldVersion, newVersion) {
+        if (oldVersion < 2) {
+          db.execute("ALTER TABLE usuarios ADD COLUMN matricula VARCHAR");
+          db.execute("ALTER TABLE usuarios ADD COLUMN curso VARCHAR");
+        }
+      },
       onCreate: (db, dbVersaoRecente) {
         // SQL para criar a tabela 'usuarios' com colunas de ID, nome e idade
         String sql = "CREATE TABLE usuarios ("
@@ -102,7 +108,7 @@ class _HomeState extends State<Home> {
     // Imprime os dados de cada usuário listado no banco
     for (var usu in usuarios) {
       print(
-          " id: ${usu['id'].toString()} nome: ${usu['nome']} idade: ${usu['idade']}");
+          " id: ${usu['id'].toString()} nome: ${usu['nome']} idade: ${usu['idade']} matricula: ${usu['matricula']} curso: ${usu['curso']}");
     }
   }
 
@@ -113,7 +119,7 @@ class _HomeState extends State<Home> {
     // Faz a consulta na tabela 'usuarios' com o ID fornecido
     List usuarios = await db.query(
       "usuarios",
-      columns: ["id", "nome", "idade"],
+      columns: ["id", "nome", "idade", "matricula", "curso"],
       where: "id = ?",
       whereArgs: [id],
     );
@@ -122,7 +128,7 @@ class _HomeState extends State<Home> {
     if (usuarios.isNotEmpty) {
       var usuario = usuarios.first;
       _mostrarDialogo(context,
-          "ID: ${usuario['id']} \nNome: ${usuario['nome']} \nIdade: ${usuario['idade']}");
+          "ID: ${usuario['id']} \nNome: ${usuario['nome']} \nIdade: ${usuario['idade']} \nMatricula: ${usuario['matricula']} \nCurso: ${usuario['curso']}");
     } else {
       _mostrarDialogo(context, "Usuário com ID $id não encontrado.");
     }
@@ -147,7 +153,7 @@ class _HomeState extends State<Home> {
 
   // Método para atualizar informações de um usuário existente
   _atualizarUsuario(
-      BuildContext context, int id, String? nome, int? idade) async {
+      BuildContext context, int id, String? nome, int? idade, String? matricula, String? curso) async {
     Database db = await _recuperarBD();
 
     // Cria um mapa para atualizar os dados somente dos campos não nulos
@@ -157,6 +163,12 @@ class _HomeState extends State<Home> {
     }
     if (idade != null) {
       dadosUsuario["idade"] = idade;
+    }
+    if (matricula != null && matricula.isNotEmpty) {
+      dadosUsuario["matricula"] = matricula;
+    }
+    if (curso != null && curso.isNotEmpty) {
+      dadosUsuario["curso"] = curso;
     }
 
     // Realiza a atualização caso existam campos para modificar
@@ -301,7 +313,7 @@ class _HomeState extends State<Home> {
                       ? _nomeController.text
                       : null;
                   int? idade = int.tryParse(_idadeController.text);
-                  _atualizarUsuario(context, id, nome, idade);
+                  _atualizarUsuario(context, id, nome, idade, _matriculaController.text, _cursoController.text);
                 } else {
                   _mostrarDialogo(context,
                       "Por favor, insira um ID válido para atualizar.");
